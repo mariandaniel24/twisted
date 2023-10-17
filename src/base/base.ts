@@ -224,6 +224,7 @@ export class BaseApi<Region extends string> {
         response: data
       }
     } catch (e) {
+      console.log(e);
       if (forceError) {
         throw e
       }
