@@ -32,11 +32,11 @@ export class TournamentV5 extends BaseApiLol {
     body: TournamentCodeParametersV5DTO,
     count = 1
   ): Promise<ApiResponseDTO<string[]>> {
-    const params = {
+    const queryParams = {
       tournamentId,
       count
     }
-    return this.request<string[]>(region, endpointsV5.TournamentCodes, { params, body, method: 'POST' })
+    return this.request<string[]>(region, endpointsV5.TournamentCodes, { queryParams, body, method: 'POST' })
   }
 
   /**
