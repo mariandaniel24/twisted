@@ -70,5 +70,5 @@ export class LolApi extends BaseApiLol {
   /**
    * TournamentV5 methods
    */
-  public readonly TournamentV5 = new TournamentV5()
+  public readonly TournamentV5 = new TournamentV5(this.getParam())
 }
