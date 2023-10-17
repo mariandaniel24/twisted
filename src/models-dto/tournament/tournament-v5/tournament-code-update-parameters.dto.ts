@@ -6,13 +6,13 @@ export class TournamentCodeUpdateParametersV5DTO {
   /*
    * The pick type (Legal values: BLIND_PICK, DRAFT_MODE, ALL_RANDOM, TOURNAMENT_DRAFT)
    */
-  pickType: 'BLIND_PICK' | 'DRAFT_MODE' | 'ALL_RANDOM' | 'TOURNAMENT_DRAFT'
+  pickType?: 'BLIND_PICK' | 'DRAFT_MODE' | 'ALL_RANDOM' | 'TOURNAMENT_DRAFT'
   /*
    * The map type (Legal values: SUMMONERS_RIFT, HOWLING_ABYSS)
    */
-  mapType: 'SUMMONERS_RIFT' | 'HOWLING_ABYSS'
+  mapType?: 'SUMMONERS_RIFT' | 'HOWLING_ABYSS'
   /*
    * The spectator type (Legal values: NONE, LOBBYONLY, ALL)
    */
-  spectatorType: 'NONE' | 'LOBBYONLY' | 'ALL'
+  spectatorType?: 'NONE' | 'LOBBYONLY' | 'ALL'
 }

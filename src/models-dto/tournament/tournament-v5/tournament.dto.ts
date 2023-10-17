@@ -14,7 +14,7 @@ export class TournamentCodeV5DTO {
   /*
    * The metadata for tournament code.
    */
-  metaData: string
+  metaData?: string
   /*
    * The password for the tournament code game.
    */
@@ -50,5 +50,5 @@ export class TournamentCodeV5DTO {
   /*
    * The puuids of the participants (Encrypted)
    */
-  participants: string[]
+  participants?: string[]
 }
