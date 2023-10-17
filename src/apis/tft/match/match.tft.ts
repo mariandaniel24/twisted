@@ -15,7 +15,7 @@ export class MatchTFTApi extends BaseApiTft {
     const params = {
       matchId
     }
-    return this.request<MatchTFTDTO>(region, endpointsTFTV1.Match, params)
+    return this.request<MatchTFTDTO>(region, endpointsTFTV1.Match, { params })
   }
 
   /**
@@ -27,7 +27,7 @@ export class MatchTFTApi extends BaseApiTft {
     const params = {
       summonerPUUID
     }
-    return this.request<string[]>(region, endpointsTFTV1.MatchListing, params, false, query)
+    return this.request<string[]>(region, endpointsTFTV1.MatchListing, { params, queryParams: query })
   }
 
   /**

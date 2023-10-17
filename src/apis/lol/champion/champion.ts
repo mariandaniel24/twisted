@@ -24,7 +24,7 @@ export class ChampionApi extends BaseApiLol {
     const params = {
       encryptedSummonerId
     }
-    return this.request<ChampionMasteryDTO[]>(region, endpointsV4.ChampionMasteryBySummoner, params)
+    return this.request<ChampionMasteryDTO[]>(region, endpointsV4.ChampionMasteryBySummoner, { params })
   }
   /**
    * Champion mastery by summoner
@@ -36,7 +36,7 @@ export class ChampionApi extends BaseApiLol {
       encryptedSummonerId,
       championId
     }
-    return this.request<ChampionMasteryDTO>(region, endpointsV4.ChampionMasteryBySummonerChampion, params)
+    return this.request<ChampionMasteryDTO>(region, endpointsV4.ChampionMasteryBySummonerChampion, { params })
   }
   /**
    * Champions mastery score
@@ -49,7 +49,7 @@ export class ChampionApi extends BaseApiLol {
     }
     let {
       response: score
-    } = await this.request<number | undefined>(region, endpointsV4.ChampionsScore, params)
+    } = await this.request<number | undefined>(region, endpointsV4.ChampionsScore, { params })
     if (typeof score !== 'number') {
       score = 0
     }

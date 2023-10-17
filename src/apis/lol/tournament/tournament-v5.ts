@@ -22,21 +22,21 @@ export class TournamentV5 extends BaseApiLol {
    * Create a tournament code for the given tournament.
    * @param region
    * @param tournamentId
-   * @param parameters
+   * @param queryParams
    * @param count
    * @returns string[]
    */
   public async createTournamentCodes(
     region: Regions,
     tournamentId: number,
-    parameters: TournamentCodeParametersV5DTO,
+    body: TournamentCodeParametersV5DTO,
     count = 1
   ): Promise<ApiResponseDTO<string[]>> {
     const params = {
       tournamentId,
       count
     }
-    return this.request<string[]>(region, endpointsV5.TournamentCodes, params, false, parameters)
+    return this.request<string[]>(region, endpointsV5.TournamentCodes, { params, body, method: 'POST' })
   }
 
   /**
@@ -49,21 +49,21 @@ export class TournamentV5 extends BaseApiLol {
     const params = {
       tournamentCode
     }
-    return this.request<TournamentCodeV5DTO>(region, endpointsV5.TournamentByCode, params, false)
+    return this.request<TournamentCodeV5DTO>(region, endpointsV5.TournamentByCode, { params, forceError: false })
   }
 
   /**
    * Update the pick type, map, spectator type, or allowed puuids for a code.
    * @param region
    * @param tournamentCode
-   * @param parameters
+   * @param body
    * @returns void
    */
-  public async updateTournamentCode(region: Regions, tournamentCode: string, parameters: TournamentCodeUpdateParametersV5DTO): Promise<ApiResponseDTO<void>> {
+  public async updateTournamentCode(region: Regions, tournamentCode: string, body: TournamentCodeUpdateParametersV5DTO): Promise<ApiResponseDTO<void>> {
     const params = {
       tournamentCode
     }
-    return this.request<void>(region, endpointsV5.PutTournamentCode, params, false, parameters)
+    return this.request<void>(region, endpointsV5.PutTournamentCode, { params, body, method: 'PUT' })
   }
 
   /**
@@ -76,7 +76,7 @@ export class TournamentV5 extends BaseApiLol {
     const params = {
       tournamentCode
     }
-    return this.request<LobbyEventV5DTOWrapper>(region, endpointsV5.TournamentLobbyEventsByCode, params)
+    return this.request<LobbyEventV5DTOWrapper>(region, endpointsV5.TournamentLobbyEventsByCode, { params })
   }
 
   /**
@@ -84,19 +84,19 @@ export class TournamentV5 extends BaseApiLol {
    *
    * Implementation: Providers will need to call this endpoint first to register their callback URL and their API key with the tournament system before any other tournament provider endpoints will work.
    * @param region
-   * @param providers
+   * @param body
    * @returns number
    */
-  public async createProvider(region: Regions, providers: ProviderRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
-    return this.request<number>(region, endpointsV5.PostTournamentProviders, {}, false, providers)
+  public async createProvider(region: Regions, body: ProviderRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
+    return this.request<number>(region, endpointsV5.PostTournamentProviders, { body, method: 'POST' })
   }
 
   /**
    * Create a tournament and return its ID.
    * @param region
-   * @param parameters
+   * @param body
    */
-  public async createTournament(region: Regions, parameters: TournamentRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
-    return this.request<number>(region, endpointsV5.PostTournament, {}, false, parameters)
+  public async createTournament(region: Regions, body: TournamentRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
+    return this.request<number>(region, endpointsV5.PostTournament, { params: {}, body, method: 'POST' })
   }
 }

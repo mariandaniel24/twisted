@@ -30,7 +30,7 @@ export class SpectatorApi extends BaseApiLol {
       encryptedSummonerId
     }
     try {
-      return await this.request<CurrentGameInfoDTO>(region, endpointsV4.SpectatorSummoner, params)
+      return await this.request<CurrentGameInfoDTO>(region, endpointsV4.SpectatorSummoner, { params })
     } catch (e) {
       this.errorHandler(e)
       const message = 'No active game found'

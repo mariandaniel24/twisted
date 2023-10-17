@@ -15,7 +15,7 @@ export class LeagueTFTApi extends BaseApiTft {
     const params = {
       encryptedSummonerId
     }
-    return this.request<LeagueEntryDTO[]>(region, endpointsTFTV1.LeagueBySummoner, params)
+    return this.request<LeagueEntryDTO[]>(region, endpointsTFTV1.LeagueBySummoner, { params })
   }
   /**
    * Get the master league

@@ -18,7 +18,7 @@ export class LeagueApi extends BaseApiLol {
     const params = {
       encryptedSummonerId
     }
-    return this.request<SummonerLeagueDto[]>(region, endpointsV4.SummonerLeague, params)
+    return this.request<SummonerLeagueDto[]>(region, endpointsV4.SummonerLeague, { params })
   }
   /**
    * Top league exp
@@ -33,7 +33,7 @@ export class LeagueApi extends BaseApiLol {
       tier,
       division
     }
-    return this.request<LeagueEntryDTO>(region, endpointsV4.LeagueExp, params)
+    return this.request<LeagueEntryDTO>(region, endpointsV4.LeagueExp, { params })
   }
   /**
    * League entries
@@ -49,7 +49,7 @@ export class LeagueApi extends BaseApiLol {
       tier,
       division
     }
-    return this.request<LeagueEntryDTO>(region, endpointsV4.LeagueEntries, params, false, { page })
+    return this.request<LeagueEntryDTO>(region, endpointsV4.LeagueEntries, { params, forceError: false, queryParams: { page } })
   }
   /**
    * Get league by id
@@ -60,7 +60,7 @@ export class LeagueApi extends BaseApiLol {
     const params = {
       leagueId
     }
-    return this.request<LeagueListDTO>(region, endpointsV4.League, params)
+    return this.request<LeagueListDTO>(region, endpointsV4.League, { params })
   }
   /**
    * Get challenger league by queue
@@ -71,7 +71,7 @@ export class LeagueApi extends BaseApiLol {
     const params = {
       queue
     }
-    return this.request<LeagueListDTO>(region, endpointsV4.ChallengerLeaguesByQueue, params)
+    return this.request<LeagueListDTO>(region, endpointsV4.ChallengerLeaguesByQueue, { params })
   }
   /**
    * Get grandmaster league by queue
@@ -82,7 +82,7 @@ export class LeagueApi extends BaseApiLol {
     const params = {
       queue
     }
-    return this.request<LeagueListDTO>(region, endpointsV4.GrandMasterLeaguesByQueue, params)
+    return this.request<LeagueListDTO>(region, endpointsV4.GrandMasterLeaguesByQueue, { params })
   }
   /**
    * Get master league by queue
@@ -93,6 +93,6 @@ export class LeagueApi extends BaseApiLol {
     const params = {
       queue
     }
-    return this.request<LeagueListDTO>(region, endpointsV4.MasterLeaguesByQueue, params)
+    return this.request<LeagueListDTO>(region, endpointsV4.MasterLeaguesByQueue, { params })
   }
 }

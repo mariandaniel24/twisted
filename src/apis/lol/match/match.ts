@@ -43,7 +43,7 @@ export class MatchApi extends BaseApiLol {
     const params = {
       matchId
     }
-    const data = await this.request<MatchDto>(region, endpointsV4.Match, params)
+    const data = await this.request<MatchDto>(region, endpointsV4.Match, { params })
     return this.map(data)
   }
   /**
@@ -57,7 +57,7 @@ export class MatchApi extends BaseApiLol {
       encryptedAccountId
     }
     try {
-      return await this.request<MatchListingDto>(region, endpointsV4.MatchListing, params, false, query)
+      return await this.request<MatchListingDto>(region, endpointsV4.MatchListing, { params, forceError:false, queryParams: query })
     } catch (e) {
       if (e.status !== NOT_FOUND) {
         throw e
@@ -76,6 +76,6 @@ export class MatchApi extends BaseApiLol {
     const params = {
       matchId
     }
-    return this.request<MatchTimelineDto>(region, endpointsV4.MatchTimeline, params)
+    return this.request<MatchTimelineDto>(region, endpointsV4.MatchTimeline, { params })
   }
 }

@@ -27,7 +27,7 @@ export class ThirdPartyCode extends BaseApiLol {
       encryptedSummonerId
     }
     try {
-      const data = await this.request<string>(region, endpointsV4.ThirdPartyCode, params)
+      const data = await this.request<string>(region, endpointsV4.ThirdPartyCode, { params })
       rateLimits = data.rateLimits
       code = data.response
     } catch (e) {

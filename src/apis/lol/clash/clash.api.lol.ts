@@ -15,7 +15,7 @@ export class ClashApi extends BaseApiLol {
    * @param summonerId Encrypted summoner id
    */
   playersList (encryptedSummonerId: string, region: Regions) {
-    return this.request<ClashPlayerDTO[]>(region, endpointsClashV1.GetPlayers, { encryptedSummonerId })
+    return this.request<ClashPlayerDTO[]>(region, endpointsClashV1.GetPlayers, { params: { encryptedSummonerId } })
   }
   /**
    * Get team by id
@@ -23,7 +23,7 @@ export class ClashApi extends BaseApiLol {
    * @param teamId Team id
    */
   getTeamById (teamId: string, region: Regions) {
-    return this.request<ClashTeamDto>(region, endpointsClashV1.GetTeam, { teamId })
+    return this.request<ClashTeamDto>(region, endpointsClashV1.GetTeam, { params: { teamId } })
   }
   /**
    * Returns a list of active and upcoming tournaments.
@@ -36,12 +36,12 @@ export class ClashApi extends BaseApiLol {
    * Get team tournament
    */
   getTeamTournament (teamId: string, region: Regions) {
-    return this.request<TournamentClashDTO>(region, endpointsClashV1.GetTournamentByTeamId, { teamId })
+    return this.request<TournamentClashDTO>(region, endpointsClashV1.GetTournamentByTeamId, { params: { teamId } })
   }
   /**
    * Get tournament by id
    */
   getTournamentById (tournamentId: string | number, region: Regions) {
-    return this.request<TournamentClashDTO>(region, endpointsClashV1.GetTournamentById, { tournamentId })
+    return this.request<TournamentClashDTO>(region, endpointsClashV1.GetTournamentById, { params:{ tournamentId } })
   }
 }

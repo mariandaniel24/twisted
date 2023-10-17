@@ -28,7 +28,7 @@ export class MatchV5Api extends BaseApiLol {
     const params = {
       matchId
     }
-    return await this.request<MatchV5DTOs.MatchDto>(region, endpointsV5.Match, params)
+    return await this.request<MatchV5DTOs.MatchDto>(region, endpointsV5.Match, { params })
   }
   /**
    * Summoner match listing
@@ -41,7 +41,7 @@ export class MatchV5Api extends BaseApiLol {
       summonerPUUID: puuid
     }
     try {
-      return await this.request<string[]>(region, endpointsV5.MatchListing, params, false, query)
+      return await this.request<string[]>(region, endpointsV5.MatchListing, { params, forceError: false, queryParams: query })
     } catch (e) {
       if (e.status !== NOT_FOUND) {
         throw e
@@ -54,6 +54,6 @@ export class MatchV5Api extends BaseApiLol {
     const params = {
       matchId
     }
-    return this.request<MatchV5TimelineDTOs.MatchTimelineDto>(region, endpointsV5.MatchTimeline, params)
+    return this.request<MatchV5TimelineDTOs.MatchTimelineDto>(region, endpointsV5.MatchTimeline, { params })
   }
 }

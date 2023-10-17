@@ -17,6 +17,13 @@ import { RegionGroups } from '../constants'
 
 config()
 
+interface RequestOpts {
+  params?: IParams
+  forceError?: boolean
+  queryParams?: any
+  method?: AxiosRequestConfig['method']
+  body?: Record<string, any>;
+}
 export class BaseApi<Region extends string> {
   protected readonly game: BaseApiGames = BaseApiGames.LOL
   private readonly baseUrl = BaseConstants.BASE_URL
@@ -30,14 +37,14 @@ export class BaseApi<Region extends string> {
     logRatelimits: false
   }
 
-  constructor ()
-  constructor (params: IBaseApiParams)
+  constructor()
+  constructor(params: IBaseApiParams)
   /**
    * Base api
    * @param key Riot games api key
    */
-  constructor (key: string)
-  constructor (param?: string | IBaseApiParams) {
+  constructor(key: string)
+  constructor(param?: string | IBaseApiParams) {
     this.key = process.env.RIOT_API_KEY || ''
     if (typeof param === 'string') {
       this.key = param
@@ -49,7 +56,7 @@ export class BaseApi<Region extends string> {
     }
   }
 
-  private setParams (param: IBaseApiParams) {
+  private setParams(param: IBaseApiParams) {
     if (typeof param.rateLimitRetry !== 'undefined') {
       this.rateLimitRetry = param.rateLimitRetry
     }
@@ -75,7 +82,7 @@ export class BaseApi<Region extends string> {
     }
   }
 
-  private getRateLimits (headers: any): RateLimitDto {
+  private getRateLimits(headers: any): RateLimitDto {
     return {
       Type: _.get(headers, 'x-rate-limit-type', null),
       AppRateLimit: _.get(headers, 'x-app-rate-limit', null),
@@ -87,22 +94,18 @@ export class BaseApi<Region extends string> {
     }
   }
 
-  private getBaseUrl () {
+  private getBaseUrl() {
     return this.baseUrl.replace(':game', this.game)
   }
 
-  private getApiUrl (endpoint: IEndpoint, params: IParams) {
-    const {
-      prefix,
-      version,
-      path
-    } = endpoint
+  private getApiUrl(endpoint: IEndpoint, params: IParams) {
+    const { prefix, version, path } = endpoint
     const basePath = `${prefix}/v${version}/${path}`
     const re = /\$\(([^\)]+)?\)/g
     let base = `${this.getBaseUrl()}/${basePath}`
     let match
     // tslint:disable:no-conditional-assignment
-    while (match = re.exec(base)) {
+    while ((match = re.exec(base))) {
       const [key] = match
       const value = encodeURI(String(params[match[1]]))
       base = base.replace(key, value)
@@ -111,21 +114,21 @@ export class BaseApi<Region extends string> {
     return base
   }
 
-  private isRateLimitError (e: any) {
+  private isRateLimitError(e: any) {
     if (!e) {
       return false
     }
     return e.status === TOO_MANY_REQUESTS || e.response?.status === TOO_MANY_REQUESTS
   }
 
-  private isServiceUnavailableError (e: any) {
+  private isServiceUnavailableError(e: any) {
     if (!e) {
       return false
     }
     return e.status === SERVICE_UNAVAILABLE || e.response?.status === SERVICE_UNAVAILABLE
   }
 
-  private getError (e: any) {
+  private getError(e: any) {
     const headers = this.getRateLimits(_.get(e, 'response.headers'))
     if (this.isRateLimitError(e)) {
       return new RateLimitError(headers)
@@ -137,20 +140,20 @@ export class BaseApi<Region extends string> {
     return new GenericError(headers, e)
   }
 
-  private internalRequest<T> (options: AxiosRequestConfig): Promise<T> {
+  private internalRequest<T>(options: AxiosRequestConfig): Promise<T> {
     return RequestBase.request<T>(options)
   }
 
-  private async retryRateLimit<T> (region: Region | RegionGroups, endpoint: IEndpoint, params?: IParams, e?: any): Promise<ApiResponseDTO<T>> {
-    let baseError = this.getError(e)
-    const isRateLimitError = this.isRateLimitError(e) || this.isServiceUnavailableError(e)
+  private async retryRateLimit<T>(region: Region | RegionGroups, endpoint: IEndpoint, opts?: RequestOpts): Promise<ApiResponseDTO<T>> {
+    const { forceError } = opts || {}
+    let baseError = this.getError(forceError)
+    const isRateLimitError = this.isRateLimitError(forceError) || this.isServiceUnavailableError(forceError)
     if (!this.rateLimitRetry || !isRateLimitError || this.rateLimitRetryAttempts < 1) {
       throw baseError
     }
-    const forceError = true
     for (let i = 0; i < this.rateLimitRetryAttempts; i++) {
       try {
-        const response = await this.request<T>(region, endpoint, params, forceError)
+        const response = await this.request<T>(region, endpoint, opts)
         return response
       } catch (error) {
         const parseError = this.getError(error)
@@ -160,15 +163,10 @@ export class BaseApi<Region extends string> {
         }
         // Set a new attemp
         const {
-          rateLimits: {
-            RetryAfter
-          }
+          rateLimits: { RetryAfter }
         } = parseError
-        const waitSeconds =
-          this.isServiceUnavailableError(e) ?
-            BaseConstants.SERVICE_UNAVAILABLE :
-            BaseConstants.RATE_LIMIT
-        const msToWait = ((RetryAfter || 0) * 1000) + (waitSeconds * 1000 * Math.random())
+        const waitSeconds = this.isServiceUnavailableError(forceError) ? BaseConstants.SERVICE_UNAVAILABLE : BaseConstants.RATE_LIMIT
+        const msToWait = (RetryAfter || 0) * 1000 + waitSeconds * 1000 * Math.random()
         // Log
         if (this.debug.logRatelimits) {
           Logger.rateLimit(endpoint, msToWait)
@@ -181,7 +179,7 @@ export class BaseApi<Region extends string> {
     throw baseError
   }
 
-  protected getParam (): IBaseApiParams {
+  protected getParam(): IBaseApiParams {
     return {
       key: this.key,
       rateLimitRetry: this.rateLimitRetry,
@@ -191,12 +189,13 @@ export class BaseApi<Region extends string> {
     }
   }
 
-  protected async request<T> (region: Region | RegionGroups, endpoint: IEndpoint, params?: IParams, forceError?: boolean, queryParams?: any): Promise<ApiResponseDTO<T>> {
+  protected async request<T>(region: Region | RegionGroups, endpoint: IEndpoint, opts?: RequestOpts): Promise<ApiResponseDTO<T>> {
     if (!this.key) {
       throw new ApiKeyNotFound()
     }
+    const { params = {}, forceError, queryParams = {}, method = 'GET' } = opts || {}
+
     // Url params
-    params = params || {}
     params.region = region.toLowerCase()
     // Format
     const url = this.getApiUrl(endpoint, params)
@@ -206,11 +205,12 @@ export class BaseApi<Region extends string> {
     }
     const options: AxiosRequestConfig = {
       url,
-      method: 'GET',
+      method,
       headers: {
         Origin: null,
         'X-Riot-Token': this.key
       },
+      data: opts?.body,
       params: queryParams
     }
     if (this.debug.logUrls) {
@@ -227,7 +227,7 @@ export class BaseApi<Region extends string> {
       if (forceError) {
         throw e
       }
-      return await this.retryRateLimit<T>(region, endpoint, params, e)
+      return await this.retryRateLimit<T>(region, endpoint, opts)
     } finally {
       if (this.debug.logTime) {
         Logger.end(endpoint, url)
