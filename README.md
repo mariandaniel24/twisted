@@ -126,18 +126,19 @@ Everything should be in the same order as in the official docs.
 - [x] `Get a summoner by summoner name.`
 - [x] `Get a summoner by PUUID.`
 - [x] `Get a summoner by summoner ID.`
-## TOURNAMENT-STUB-V4
-- [ ] `Create a mock tournament code for the given tournament.`
-- [ ] `Gets a mock list of lobby events by tournament code.`
-- [ ] `Creates a mock tournament provider and returns its ID.`
-- [ ] `Creates a mock tournament and returns its ID.`
-## TOURNAMENT-V4
-- [ ] `Create a tournament code for the given tournament.`
-- [ ] `Returns the tournament code DTO associated with a tournament code string.`
-- [ ] `Update the pick type, map, spectator type, or allowed summoners for a code.`
-- [ ] `Gets a list of lobby events by tournament code.`
-- [ ] `Creates a tournament provider and returns its ID.`
-- [ ] `Creates a tournament and returns its ID.`
+## TOURNAMENT-STUB-V5
+- [x] `Create a tournament code for the given tournament.`
+- [x] `Returns the tournament code DTO associated with a tournament code string.`
+- [x] `Gets a list of lobby events by tournament code.`
+- [x] `Creates a tournament provider and returns its ID.`
+- [x] `Creates a mock tournament and returns its ID.`
+## TOURNAMENT-V5
+- [x] `Create a tournament code for the given tournament.`
+- [x] `Returns the tournament code DTO associated with a tournament code string.`
+- [x] `Update the pick type, map, spectator type, or allowed summoners for a code.`
+- [x] `Gets a list of lobby events by tournament code.`
+- [x] `Creates a tournament provider and returns its ID.`
+- [x] `Creates a tournament and returns its ID.`
 
 # TFT Endpoints
 ## TFT-SUMMONER-V1

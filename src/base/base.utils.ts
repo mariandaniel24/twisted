@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios'
 import qs from 'querystring'
 
 export interface IParams {
-  [key: string]: string | number
+  [key: string]: string | number | boolean | undefined | null
 }
 
 export interface IBaseApiParams {

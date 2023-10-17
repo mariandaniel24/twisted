@@ -8,7 +8,7 @@ interface IEndpoints {
   [key: string]: IEndpoint
 }
 
-export const endpointsV5: IEndpoints = {
+export const endpointsV5 = {
   MatchListing: {
     path: 'matches/by-puuid/$(summonerPUUID)/ids',
     prefix: 'match',
@@ -22,6 +22,36 @@ export const endpointsV5: IEndpoints = {
   MatchTimeline: {
     path: 'matches/$(matchId)/timeline',
     prefix: 'match',
+    version: 5
+  },
+  TournamentCodes: {
+    path: 'codes',
+    prefix: 'tournament',
+    version: 5
+  },
+  TournamentByCode: {
+    path: 'codes/$(tournamentCode)',
+    prefix: 'tournament',
+    version: 5
+  },
+  PutTournamentCode: {
+    path: 'codes/$(tournamentCode)',
+    prefix: 'tournament',
+    version: 5
+  },
+  TournamentLobbyEventsByCode: {
+    path: 'lobby-events/by-code/$(tournamentCode)',
+    prefix: 'tournament',
+    version: 5
+  },
+  PostTournamentProviders: {
+    path: 'providers',
+    prefix: 'tournament',
+    version: 5
+  },
+  PostTournament: {
+    path: 'tournaments',
+    prefix: 'tournament',
     version: 5
   }
 }

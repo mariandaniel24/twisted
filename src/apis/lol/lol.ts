@@ -11,6 +11,7 @@ import { BaseApiLol } from './base/base.api.lol'
 import { ClashApi } from './clash/clash.api.lol'
 import { MatchV5Api } from './match/match-v5'
 import { StatusV4Api } from './status/status-v4'
+import { TournamentV5 } from './tournament/tournament-v5'
 
 /**
  * Classic league of legends api
@@ -66,4 +67,8 @@ export class LolApi extends BaseApiLol {
    * Seed methods
    */
   public readonly Seed = new SeedApi()
+  /**
+   * TournamentV5 methods
+   */
+  public readonly TournamentV5 = new TournamentV5()
 }
