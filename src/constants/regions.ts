@@ -12,7 +12,20 @@ export enum Regions {
   JAPAN = 'JP1',
   PBE = 'PBE1'
 }
-
+export enum TournamentRegions {
+  BR = 'BR',
+  EUNE = 'EUNE',
+  EUW = 'EUW',
+  JP = 'JP',
+  LAN = 'LAN',
+  LAS = 'LAS',
+  NA = 'NA',
+  OCE = 'OCE',
+  PBE = 'PBE',
+  RU = 'RU',
+  TR = 'TR',
+  KR = 'KR'
+}
 /**
  * As per RIOT Api:
  * - The AMERICAS routing value serves NA, BR, LAN and LAS.
