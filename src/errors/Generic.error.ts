@@ -17,9 +17,9 @@ export class GenericError extends Error implements IErrors {
   readonly name = 'GenericError'
 
   constructor (rateLimits: RateLimitDto, error: Axios.AxiosError) {
-    super(error.message || message)
-    this.status = error.response?.status || HttpStatusCodes.INTERNAL_SERVER_ERROR
-    this.body = error.response?.data
+    super(error?.message || message)
+    this.status = error?.response?.status || HttpStatusCodes.INTERNAL_SERVER_ERROR
+    this.body = error?.response?.data
     this.rateLimits = rateLimits
     this.error = error
     Object.setPrototypeOf(this, GenericError.prototype)

@@ -1,8 +1,12 @@
 export class TournamentCodeParametersV5DTO {
   /**
-   * Optional list of encrypted summonerIds in order to validate the players eligible to join the lobby. NOTE: We currently do not enforce participants at the team level, but rather the aggregate of teamOne and teamTwo. We may add the ability to enforce at the team level in the future.
+   * Optional list of encrypted puuids in order to validate the players eligible to join the lobby. NOTE: We currently do not enforce participants at the team level, but rather the aggregate of teamOne and teamTwo. We may add the ability to enforce at the team level in the future.    
    */
-  allowedSummonerIds?: string[]
+  allowedParticipants?: string[]
+  /**
+   * Checks if allowed participants are enough to make full teams. 
+   */
+  enoughPlayers: boolean
   /**
    * Optional string that may contain any data in any format, if specified at all. Used to denote any custom information about the game.
    */
