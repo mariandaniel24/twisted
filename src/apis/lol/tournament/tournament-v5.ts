@@ -1,5 +1,5 @@
 import { NOT_FOUND } from 'http-status-codes'
-import { Regions } from '../../../constants'
+import { RegionGroups } from '../../../constants'
 import { FeaturedGamesDTO } from '../../../models-dto/spectator/featured-games.dto'
 import { endpointsV5 } from '../../../endpoints/endpoints'
 import { BaseApiLol } from '../base/base.api.lol'
@@ -27,7 +27,7 @@ export class TournamentV5 extends BaseApiLol {
    * @returns string[]
    */
   public async createTournamentCodes(
-    region: Regions,
+    region: RegionGroups,
     tournamentId: number,
     body: TournamentCodeParametersV5DTO,
     count = 1
@@ -45,7 +45,7 @@ export class TournamentV5 extends BaseApiLol {
    * @param tournamentCode
    * @returns TournamentCodeV5DTO
    */
-  public async tournamentByCode(region: Regions, tournamentCode: string): Promise<ApiResponseDTO<TournamentCodeV5DTO>> {
+  public async tournamentByCode(region: RegionGroups, tournamentCode: string): Promise<ApiResponseDTO<TournamentCodeV5DTO>> {
     const params = {
       tournamentCode
     }
@@ -59,7 +59,7 @@ export class TournamentV5 extends BaseApiLol {
    * @param body
    * @returns void
    */
-  public async updateTournamentCode(region: Regions, tournamentCode: string, body: TournamentCodeUpdateParametersV5DTO): Promise<ApiResponseDTO<void>> {
+  public async updateTournamentCode(region: RegionGroups, tournamentCode: string, body: TournamentCodeUpdateParametersV5DTO): Promise<ApiResponseDTO<void>> {
     const params = {
       tournamentCode
     }
@@ -72,7 +72,7 @@ export class TournamentV5 extends BaseApiLol {
    * @param tournamentCode
    * @returns LobbyEventV5DTOWrapper
    **/
-  public async lobbyEventsByCode(region: Regions, tournamentCode: string): Promise<ApiResponseDTO<LobbyEventV5DTOWrapper>> {
+  public async lobbyEventsByCode(region: RegionGroups, tournamentCode: string): Promise<ApiResponseDTO<LobbyEventV5DTOWrapper>> {
     const params = {
       tournamentCode
     }
@@ -87,7 +87,7 @@ export class TournamentV5 extends BaseApiLol {
    * @param body
    * @returns number
    */
-  public async createProvider(region: Regions, body: ProviderRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
+  public async createProvider(region: RegionGroups, body: ProviderRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
     return this.request<number>(region, endpointsV5.PostTournamentProviders, { body, method: 'POST' })
   }
 
@@ -96,7 +96,7 @@ export class TournamentV5 extends BaseApiLol {
    * @param region
    * @param body
    */
-  public async createTournament(region: Regions, body: TournamentRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
+  public async createTournament(region: RegionGroups, body: TournamentRegistrationParametersV5DTO): Promise<ApiResponseDTO<number>> {
     return this.request<number>(region, endpointsV5.PostTournament, { params: {}, body, method: 'POST' })
   }
 }
