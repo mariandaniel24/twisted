@@ -193,7 +193,7 @@ export class BaseApi<Region extends string> {
     if (!this.key) {
       throw new ApiKeyNotFound()
     }
-    const { params = {}, forceError, queryParams = {}, method = 'GET' } = opts || {}
+    const { params = {}, forceError = false, queryParams = {}, method = 'GET' } = opts || {}
 
     // Url params
     params.region = region.toLowerCase()

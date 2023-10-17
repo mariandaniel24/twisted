@@ -22,7 +22,7 @@ export class TournamentV5 extends BaseApiLol {
    * Create a tournament code for the given tournament.
    * @param region
    * @param tournamentId
-   * @param queryParams
+   * @param body
    * @param count
    * @returns string[]
    */
