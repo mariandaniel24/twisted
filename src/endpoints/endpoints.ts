@@ -44,6 +44,11 @@ export const endpointsV5 = {
     prefix: 'tournament',
     version: 5
   },
+  TournamentGamesByCode: {
+    path: 'games/by-code/$(tournamentCode)',
+    prefix: 'tournament',
+    version: 5
+  },
   PostTournamentProviders: {
     path: 'providers',
     prefix: 'tournament',

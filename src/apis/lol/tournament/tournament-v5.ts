@@ -10,6 +10,7 @@ import { TournamentRegistrationParametersV5DTO } from '../../../models-dto/tourn
 import { TournamentCodeV5DTO } from '../../../models-dto/tournament/tournament-v5/tournament.dto'
 import { TournamentCodeUpdateParametersV5DTO } from '../../../models-dto/tournament/tournament-v5/tournament-code-update-parameters.dto'
 import { ApiResponseDTO } from '../../../models-dto'
+import { TournamentGamesV5DTO } from '../../../models-dto/tournament/tournament-v5/tournament-games-dto'
 
 export class TournamentV5 extends BaseApiLol {
   private errorHandler(e: any) {
@@ -77,6 +78,19 @@ export class TournamentV5 extends BaseApiLol {
       tournamentCode
     }
     return this.request<LobbyEventV5DTOWrapper>(region, endpointsV5.TournamentLobbyEventsByCode, { params })
+  }
+
+  /**
+   * Gets a list of games by tournament code.
+   * @param region
+   * @param tournamentCode
+   * @returns TournamentGamesV5DTO[]
+   **/
+  public async gamesByCode(region: RegionGroups, tournamentCode: string): Promise<ApiResponseDTO<TournamentGamesV5DTO[]>> {
+    const params = {
+      tournamentCode
+    }
+    return this.request<TournamentGamesV5DTO[]>(region, endpointsV5.TournamentGamesByCode, { params })
   }
 
   /**
